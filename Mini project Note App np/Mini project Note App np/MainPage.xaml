@@ -1,7 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Mini_project_Note_App_np.MainPage">
+                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                xmlns:model="clr-namespace:Mini_project_Note_App_np.Models"
+                x:Class="Mini_project_Note_App_np.MainPage"
+                x:Name="this">
 
     <ScrollView>
         <VerticalStackLayout
@@ -9,33 +11,56 @@
             Padding="30,0"
             VerticalOptions="Center">
 
-            <Image
-                Source="dotnet_bot.png"
-                SemanticProperties.Description="Cute dot net bot waving hi to you!"
-                HeightRequest="200"
-                HorizontalOptions="Center" />
-
             <Label
-                Text="Hello, World!"
+                Text="PRIVATE THOUGHTS"
                 SemanticProperties.HeadingLevel="Level1"
                 FontSize="32"
                 HorizontalOptions="Center" />
+            <HorizontalStackLayout Spacing="15">
+                <Button
+                    x:Name="AllBtn"
+                    BindingContext="this"
+                    Text="All"
+                    SemanticProperties.Hint="Shows all notes"
+                    Clicked="AllSelected"
+                    HorizontalOptions="Center" />
 
-            <Label
-                Text="Welcome to .NET Multi-platform App UI"
-                SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I"
-                FontSize="18"
-                HorizontalOptions="Center" />
+                <Button
+                    x:Name="ToDoBtn"
+                    Text="To-Do"
+                    SemanticProperties.Hint="Show"
+                    Clicked="ToDoSelected"
+                    HorizontalOptions="Center" />
+                <Button
+                    x:Name="UniBtn"
+                    Text="Uni"
+                    SemanticProperties.Hint="Show"
+                    Clicked="UniSelected"
+                    HorizontalOptions="Center" />
+            </HorizontalStackLayout>
 
-            <Button
-                x:Name="CounterBtn"
-                Text="Click me"
-                SemanticProperties.Hint="Counts the number of times you click"
-                Clicked="OnCounterClicked"
-                HorizontalOptions="Center" />
-
+            <CollectionView
+                x:Name="NotesView"
+                BindingContext="this"
+                >
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" Span="2"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:Note">
+                    <Frame CornerRadius="30"
+                            HorizontalOptions="Start"
+                            HasShadow="True"
+                            IsClippedToBounds="True"
+                            Padding="0">
+                        <VerticalStackLayout Background="{Binding Color}" Margin="5" Padding="8">
+                                <Label Text="{Binding Name}" TextTransform="Uppercase" FontAttributes="Bold" TextColor="Black"/>
+                                <Label Text="{Binding Content}" TextColor="Black"/>
+                        </VerticalStackLayout>
+                    </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
         </VerticalStackLayout>
     </ScrollView>
-
 </ContentPage>

@@ -1,24 +1,45 @@
-﻿namespace Mini_project_Note_App_np;
+﻿using Mini_project_Note_App_np.NewFolder;
+
+namespace Mini_project_Note_App_np;
 
 public partial class MainPage : ContentPage
 {
 	int count = 0;
+	private readonly NoteViewModel Notes;
 
-	public MainPage()
+    private bool isAllSelected;
+    private bool isToDoSelected;
+    private bool isUniSelected;
+
+    public MainPage()
 	{
 		InitializeComponent();
+		this.BindingContext = this;
+        Notes = new NoteViewModel();
+		NotesView.ItemsSource = Notes.DisplayedNotes;
 	}
 
-	private void OnCounterClicked(object sender, EventArgs e)
+	private void UniSelected(object sender, EventArgs e)
 	{
-		count++;
+		Notes.SetTag("Uni");
 
-		if (count == 1)
-			CounterBtn.Text = $"Clicked {count} time";
-		else
-			CounterBtn.Text = $"Clicked {count} times";
-
-		SemanticScreenReader.Announce(CounterBtn.Text);
+			
+		SemanticScreenReader.Announce(AllBtn.Text);
 	}
+    private void ToDoSelected(object sender, EventArgs e)
+    {
+        Notes.SetTag("To-Do");
+
+
+        SemanticScreenReader.Announce(AllBtn.Text);
+    }
+
+    private void AllSelected(object sender, EventArgs e)
+    {
+        Notes.SetTag("All");
+
+
+        SemanticScreenReader.Announce(AllBtn.Text);
+    }
 }
 
